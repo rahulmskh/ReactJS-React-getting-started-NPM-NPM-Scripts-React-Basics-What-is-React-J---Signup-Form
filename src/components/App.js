@@ -2,12 +2,12 @@ import React, {Component, useState} from "react";
 import '../styles/App.css';
 
 const App = () => {
-  const initialValues = { username: '', email: '', gender: 'male', phoneNumber: '', password: ''};
+  const initialValues = { username: '', email: '', gender: '', phoneNumber: '', password: ''};
   let UserName;
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  const [userN, setUserName] = useState('');
+  const [userName, setUserName] = useState('');
 
   const handleChange =(event) =>{
     const{name,value} = event.target;
@@ -17,8 +17,8 @@ const App = () => {
   const handleSubmit = (event) =>{
     event.preventDefault();
     setFormErrors(validation(formValues));
-    UserName = 'Hello '+ formValues.email.split('@')[0];
-    setUserName(UserName);
+    userName = 'Hello '+ formValues.email.split('@')[0];
+    setUserName(userName);
     setIsSubmit(true);
   }
   const validation = (values) => {
@@ -34,13 +34,16 @@ const App = () => {
       }
       if(!values.email){
         errors.email = "All fields are mandatory";
-      } else if(regexEmail.test(values.email)){
+      } else if(!regexEmail.test(values.email)){
         errors.email = "Email must contain @";
       }
+      // if(values.gender.length === 0){
+      //   errors.gender = "Please identify as male, female or others";
+      // }
       if(!values.gender){
         errors.username = "All fields are mandatory";
       }
-      else if(!values.gender === formValues.gender){
+      else if(values.gender != formValues.gender){
         errors.gender = "Please identify as male, female or others";
       }
       if(!values.phoneNumber){
@@ -59,7 +62,7 @@ const App = () => {
 
   return (
     <div id="main">
-       {(Object.keys(formErrors).length === 0 && isSubmit) ? <div>{UserName}</div> : <></>}
+       {(Object.keys(formErrors).length === 0 && isSubmit) ? <div>{userName}</div> : <></>}
       <form onSubmit={handleSubmit}>
       <h1>Sign Up Form</h1>
         <div>
@@ -89,12 +92,14 @@ const App = () => {
           <div> <span>Gender : </span>
             <select  
             data-testid = 'gender'
-            onChange={handleChange}
             value={formValues.gender}
-            >
+            onChange={handleChange}
+            //defaultValue='male'
+            > 
+              <option></option>
               <option value='male'>male</option>
               <option value='female'>female</option>
-              <option value='other'>others</option>
+              <option value='others'>others</option>
             </select>
             {!(Object.keys(formErrors).length === 0 && isSubmit) && <p>{formErrors.gender}</p>}
           </div>
