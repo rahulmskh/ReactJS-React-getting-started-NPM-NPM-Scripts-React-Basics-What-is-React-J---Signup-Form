@@ -3,11 +3,11 @@ import '../styles/App.css';
 
 const App = () => {
   const initialValues = { username: '', email: '', gender: '', phoneNumber: '', password: ''};
-  let UserName;
+  //let UserName;
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
-  const [userName, setUserName] = useState('');
+ // const [userName, setUserName] = useState('');
 
   const handleChange =(event) =>{
     const{name,value} = event.target;
@@ -17,8 +17,8 @@ const App = () => {
   const handleSubmit = (event) =>{
     event.preventDefault();
     setFormErrors(validation(formValues));
-    UserName = 'Hello '+ formValues.email.split('@')[0];
-    setUserName(UserName);
+    //UserName = 'Hello '+ formValues.email.split('@')[0];
+   // setUserName(UserName);
    // console.log(UserName);
     setIsSubmit(true);
   }
@@ -42,7 +42,7 @@ const App = () => {
       if(!values.gender){
         errors.gender = "All fields are mandatory";
       }
-      else if(values.gender != 'male' || values.gender != 'female' || values.gender != 'others'){
+      else if(!values.gender.length === 0){
         errors.gender = "Please identify as male, female or others";
       }
       if(!values.phoneNumber){
@@ -61,7 +61,7 @@ const App = () => {
 
   return (
     <div id="main">
-       {(Object.keys(formErrors).length === 0 && isSubmit) ? <h1>{UserName}</h1> : <></>}
+       {(Object.keys(formErrors).length === 0 && isSubmit) ? (<h1>{'Hello '+ (formValues.email.split('@')[0])}</h1>) :( <></>)}
        {/* console.log(UserName); */}
       <form onSubmit={handleSubmit}>
       <h1>Sign Up Form</h1>
@@ -89,14 +89,14 @@ const App = () => {
             />
             {!(Object.keys(formErrors).length === 0 && isSubmit)  && <p>{formErrors.email}</p>}
           </div><br></br>
-          <div> <span>Gender : </span>
+          <div> <label>Gender : </label>
             <select  
             data-testid = 'gender'
+            name="gender"
             value={formValues.gender}
             onChange={handleChange}
             //defaultValue='male'
             > 
-              <option></option>
               <option value='male'>male</option>
               <option value='female'>female</option>
               <option value='others'>others</option>
