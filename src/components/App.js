@@ -38,13 +38,11 @@ const App = () => {
       } else if(!regexEmail.test(values.email)){
         errors.email = "Email must contain @";
       }
-      // if(values.gender.length === 0){
-      //   errors.gender = "Please identify as male, female or others";
-      // }
+      
       if(!values.gender){
         errors.gender = "All fields are mandatory";
       }
-      else if(values.gender.length === 0){
+      else if(values.gender != 'male' || values.gender != 'female' || values.gender != 'others'){
         errors.gender = "Please identify as male, female or others";
       }
       if(!values.phoneNumber){
