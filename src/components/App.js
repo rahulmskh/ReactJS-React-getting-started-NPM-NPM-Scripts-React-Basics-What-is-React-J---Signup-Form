@@ -17,8 +17,9 @@ const App = () => {
   const handleSubmit = (event) =>{
     event.preventDefault();
     setFormErrors(validation(formValues));
-    userName = 'Hello '+ formValues.email.split('@')[0];
-    setUserName(userName);
+    UserName = 'Hello '+ formValues.email.split('@')[0];
+    setUserName(UserName);
+   // console.log(UserName);
     setIsSubmit(true);
   }
   const validation = (values) => {
@@ -41,9 +42,9 @@ const App = () => {
       //   errors.gender = "Please identify as male, female or others";
       // }
       if(!values.gender){
-        errors.username = "All fields are mandatory";
+        errors.gender = "All fields are mandatory";
       }
-      else if(values.gender != formValues.gender){
+      else if(values.gender.length === 0){
         errors.gender = "Please identify as male, female or others";
       }
       if(!values.phoneNumber){
@@ -54,7 +55,7 @@ const App = () => {
   
       if(!values.password){
         errors.password = "All fields are mandatory";
-      } else if(values.password.length < 6){
+      } else if(values.password.length <= 6){
         errors.password = "Password must contain atleast 6 letters";
       } 
       return errors;
@@ -62,7 +63,8 @@ const App = () => {
 
   return (
     <div id="main">
-       {(Object.keys(formErrors).length === 0 && isSubmit) ? <div>{userName}</div> : <></>}
+       {(Object.keys(formErrors).length === 0 && isSubmit) ? <h1>{UserName}</h1> : <></>}
+       {/* console.log(UserName); */}
       <form onSubmit={handleSubmit}>
       <h1>Sign Up Form</h1>
         <div>
